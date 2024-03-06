@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, DM_Serif_Display, Arvo, Aleo, Manrope } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
+const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
+const arvo = Arvo({ subsets: ["latin"], weight: ["400"] });
+const smserif = DM_Serif_Display({ subsets: ["latin"], weight: ["400"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={manrope.className}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

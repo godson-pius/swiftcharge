@@ -3,15 +3,20 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request, context: any) {
     try {
-        const { params} = context;
-        const { password } = await request.json();
+        const body = await request.json()
+        const { params } = context;
         
-        const user = await User.findOne({email: params.email, password: password});
-        if (user == null) return NextResponse.json("No user found", { status: 404 });
+        const user = await User.findOne({email: params.email, password: body.password});
+        console.log("USER =:", user);
+        
+        if (user == null) {
+            return  NextResponse.json("No user found", { status: 404 });
+        } else {
+            return NextResponse.json({user}, { status: 200 });
+        }
 
-        return NextResponse.json({user}, { status: 200 });
     } catch (error) {
-        return NextResponse.json({error: "The error"}, {status: 500});
+        return NextResponse.json({error: error}, {status: 500});
     } 
 }
 

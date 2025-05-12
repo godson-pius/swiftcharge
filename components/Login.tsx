@@ -21,9 +21,10 @@ const Login = () => {
 
         if (res.status == 200) {
             router.push('/account')
+        } else {
+            toast.error(res.data)
         }
-        
-        
+
     }
 
     return (

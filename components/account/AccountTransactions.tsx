@@ -25,7 +25,8 @@ const AccountTransactions = () => {
               <p>08029929234</p>
             </div>
 
-            <h2 className='font-bold'>$ 234</h2>
+            <p className='text-xs font-bold'>09-04-2024 | 10:00 PM</p>
+            <h2 className='mt-2 font-bold text-gray-500'>$234</h2>
 
             <IoShieldCheckmark className='absolute -right-8 opacity-15' color='green' size={130} />
 
@@ -44,7 +45,8 @@ const AccountTransactions = () => {
               <p>08029929234</p>
             </div>
 
-            <h2 className='font-bold'>$ 234</h2>
+            <p className='text-xs font-bold'>09-04-2024 | 10:00 PM</p>
+            <h2 className='mt-2 font-bold text-gray-500'>$ 234</h2>
 
             <IoShieldCheckmark className='absolute -right-8 opacity-15' color='green' size={130} />
           </div>
@@ -62,7 +64,8 @@ const AccountTransactions = () => {
               <p>08029929234</p>
             </div>
 
-            <h2 className='font-bold'>$ 234</h2>
+            <p className='text-xs font-bold'>09-04-2024 | 10:00 PM</p>
+            <h2 className='mt-2 font-bold text-gray-500'>$ 234</h2>
 
             <IoShield className='absolute -right-8 opacity-15' color='red' size={130} />
           </div>
@@ -80,7 +83,8 @@ const AccountTransactions = () => {
               <p>08029929234</p>
             </div>
 
-            <h2 className='font-bold'>$ 234</h2>
+            <p className='text-xs font-bold'>09-04-2024 | 10:00 PM</p>
+            <h2 className='mt-2 font-bold text-gray-500'>$ 234</h2>
 
             <IoShieldCheckmark className='absolute -right-8 opacity-15' color='green' size={130} />
           </div>
@@ -98,7 +102,8 @@ const AccountTransactions = () => {
               <p>08029929234</p>
             </div>
 
-            <h2 className='font-bold'>$ 234</h2>
+            <p className='text-xs font-bold'>09-04-2024 | 10:00 PM</p>
+            <h2 className='mt-2 font-bold text-gray-500'>$ 234</h2>
 
             <IoShieldCheckmark className='absolute -right-8 opacity-15' color='green' size={130} />
           </div>
@@ -116,7 +121,8 @@ const AccountTransactions = () => {
               <p>08029929234</p>
             </div>
 
-            <h2 className='font-bold'>$ 234</h2>
+            <p className='text-xs font-bold'>09-04-2024 | 10:00 PM</p>
+            <h2 className='mt-2 font-bold text-gray-500'>$ 234</h2>
 
             <IoShieldCheckmark className='absolute -right-8 opacity-15' color='green' size={130} />
           </div>

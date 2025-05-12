@@ -17,8 +17,9 @@ const CreateAccount = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const data = [{ ...inputs }]
-        const res = await toast.promise(axios.post(`/api/users`, data[0]), { pending: 'Creating account', success: 'Account Created!', error: 'Failed to create account' })
+        const data = { ...inputs, password, refId: `${inputs.username}${Math.floor(Math.random() * 100)}` }
+        console.log(data)
+        const res = await toast.promise(axios.post(`/api/users`, data), { pending: 'Creating account', success: 'Account Created!', error: 'Failed to create account' })
 
         if (res.status == 201) {
             router.push('/account')
@@ -30,6 +31,7 @@ const CreateAccount = () => {
             setPasswordState('password do not match')
         } else {
             setPasswordState('Correct! Password matched')
+            setPassword(pwd2)
 
             setTimeout(() => {
                 setPasswordState('')

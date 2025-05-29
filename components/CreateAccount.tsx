@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React, { FormEvent, useState } from 'react'
 import { IoArrowForward } from 'react-icons/io5'
 import { toast } from 'react-toastify'
-import { UserType } from '@/types/user'
+import { UserType } from '@/types/user.type'
 import { useRouter } from 'next/navigation'
 
 const CreateAccount = () => {

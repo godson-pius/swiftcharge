@@ -1,6 +1,6 @@
 'use client'
 
-import { UserType } from '@/types/user'
+import { UserType } from '@/types/user.type'
 import axios from 'axios'
 import Link from 'next/link'
 import React, { FormEvent, useState } from 'react'

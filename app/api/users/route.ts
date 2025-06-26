@@ -39,8 +39,8 @@ export async function POST(request: Request) {
 
         // Handle referral (parentId)
         let parentId = null;
-        if (data.refCode) {
-            const referrer = await User.findOne({ refId: data.refCode });
+        if (data.parentId) {
+            const referrer = await User.findOne({ refId: data.parentId });
             if (!referrer) {
                 return NextResponse.json({ error: "Invalid referrer referral ID" }, { status: 400 });
             }

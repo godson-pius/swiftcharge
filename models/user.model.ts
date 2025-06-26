@@ -68,9 +68,9 @@ userSchema.index(
 
 let User: any;
 try {
-    User = mongoose.model<IUser>('User');
+    User = mongoose.models.User || mongoose.model<IUser>('User');
 } catch {
-    User = mongoose.model<IUser>('User', userSchema);
+    User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 }
 
 export default User;

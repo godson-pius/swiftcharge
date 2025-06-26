@@ -39,7 +39,7 @@ const userSchema = new Schema(
         accounts: [
             {
                 bankCode: { type: String },
-                accountNumber: { type: String, unique: true },
+                accountNumber: { type: String },
                 bankName: { type: String },
                 accountName: { type: String },
             }

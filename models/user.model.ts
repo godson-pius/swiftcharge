@@ -1,6 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
 import bcrypt from "bcryptjs";
-import axios from "axios";
 
 export interface IUser extends Document {
     fullname?: string;

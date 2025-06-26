@@ -9,7 +9,8 @@ export const CreateUserDto = z.object({
   phone: z.string({ required_error: "Phone is required" }),
   address: z.string().optional(),
   role: z.enum(['user', 'admin']).default('user'),
-  refCode: z.string().optional(), // For referral system, optional
+  refId: z.string().optional(),
+  parentId: z.string().optional(), // For referral system, optional
 });
 
 export const LoginUserDto = z.object({

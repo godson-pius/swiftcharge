@@ -1,10 +1,10 @@
 import User from "@/models/user.model";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import connectServer from "@/config/mongoose";
 import { authenticateRequest } from "@/utils/auth";
 import { formatError } from "@/utils/errorHandler";
 
-export async function GET(request: Request, context: { params: { id: string } }) {
+export async function GET(request: NextRequest, context: { params: { id: string } }) {
     try {
         const auth = await authenticateRequest(request);
         if ('error' in auth) {

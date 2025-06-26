@@ -1,6 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
 import bcrypt from "bcryptjs";
-import axios from "axios";
 
 export interface IUser extends Document {
     fullname?: string;
@@ -40,7 +39,7 @@ const userSchema = new Schema(
         accounts: [
             {
                 bankCode: { type: String },
-                accountNumber: { type: String, unique: true },
+                accountNumber: { type: String },
                 bankName: { type: String },
                 accountName: { type: String },
             }

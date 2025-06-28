@@ -35,8 +35,14 @@ const CreateAccount = () => {
             error: 'Failed to create account'
         })
 
+        if (res.status == 400) {
+
+        }
+
         if (res.status == 201) {
             router.push('/account')
+        } else {
+            console.log("RESPONSE => ", res)
         }
     }
 

@@ -44,7 +44,6 @@ export async function POST(request: Request) {
             if (!referrer) {
                 return NextResponse.json({ error: "Invalid referrer referral ID" }, { status: 400 });
             }
-            parentId = referrer.id.toString()
         }
 
         // Create user

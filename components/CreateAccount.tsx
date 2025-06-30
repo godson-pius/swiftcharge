@@ -29,14 +29,17 @@ const CreateAccount = () => {
 
         const data = {...inputs, password}
 
-        const res = await toast.promise(axios.post(`/api/users`, data, {headers: {"Authorization": `Test`}}), {
-            pending: 'Creating account',
-            success: 'Account Created!',
-            error: 'Failed to create account'
-        })
+        try {
+            const res = await toast.promise(axios.post(`/api/users`, data, {headers: {"Authorization": `Test`}}), {
+                pending: 'Creating account',
+                success: 'Account Created!',
+            })
 
-        if (res.status == 201) {
-            router.push('/account')
+            if (res.status == 201) {
+                router.push('/login')
+            }
+        } catch (e: any) {
+            toast.error(e.response.data.error, { autoClose: false })
         }
     }
 

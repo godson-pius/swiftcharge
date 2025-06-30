@@ -40,13 +40,17 @@ export async function POST(request: NextRequest) {
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
+        
+        if (user.accounts && user.accounts.length > 0) {
+            return NextResponse.json({ error: "User already has a reserved account" }, { status: 400 });
+        }
         // create reserved account and save
         const reservedAccount = await createReservedAccount(userId, user.fullname!, user.email);
         if (!reservedAccount) {
             return NextResponse.json({ error: "Failed to create reserved account" }, { status: 500 });
         }
-        // update user with reserved account
-        user.accounts.push(reservedAccount.accounts);
+        // update user with reserved account by merging the incoming reservedAccount.accounts with user.accounts
+        user.accounts = reservedAccount.accounts;
         await user.save();
         // return response
         return NextResponse.json({ data: { reservedAccount } }, { status: 200 });

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import {Onest } from "next/font/google";
+import { Onest } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
-const onest = Onest({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
+const onest = Onest({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 export const metadata: Metadata = {
   title: "welcome - swiftcharge",

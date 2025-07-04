@@ -1,27 +1,18 @@
 'use client'
 
 import React, {useState} from 'react'
-import {
-    IoNotifications,
-    IoNotificationsOutline,
-    IoNotificationsCircleOutline,
-    IoPersonOutline,
-    IoEyeOutline,
-    IoEyeOffOutline,
-    IoCallOutline
-} from 'react-icons/io5'
+import {IoCallOutline, IoEyeOffOutline, IoEyeOutline, IoNotificationsOutline, IoPersonOutline} from 'react-icons/io5'
 import {toast} from 'react-toastify'
 import {IUser} from "@/app/interface";
 
 const AccountNavbar = () => {
-    const blurstatus = Boolean || JSON.parse(`${window.localStorage.getItem('blurstate')}`)
-    const user: IUser = JSON.parse(`${window.localStorage.getItem('swiftuser')}`)
+    const blurstatus = Boolean || JSON.parse(`${localStorage.getItem('blurstate')}`)
+    const user: IUser = JSON.parse(`${localStorage.getItem('swiftuser')}`)
     const [blurState, setBlurState] = useState(blurstatus)
 
     const handleBlur = () => {
         setBlurState(!blurState)
-        const newState = blurState
-        window.localStorage.setItem('blurstate', JSON.stringify(newState))
+        localStorage.setItem('blurstate', JSON.stringify(blurState))
 
         toast.info('Effect will take place on reload')
     }

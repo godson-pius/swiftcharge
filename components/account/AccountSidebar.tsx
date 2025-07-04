@@ -3,21 +3,28 @@
 import React from 'react'
 import Link from 'next/link'
 import { IoApertureOutline, IoCallOutline, IoEarthOutline, IoExitOutline, IoFlashOutline, IoGitNetworkOutline, IoPersonCircleOutline, IoPieChartOutline, IoSettingsOutline, IoTvOutline, IoWalletOutline } from 'react-icons/io5'
-import { usePathname } from 'next/navigation'
+import {usePathname, useRouter} from 'next/navigation'
 
 const AccountSidebar = () => {
     const pathname = usePathname()
+    const router = useRouter();
 
     const setActiveMenu = (menu: string) => {
-        return pathname.includes(menu) ? 'shadow glass p-2' : null
+        return pathname == menu ? 'shadow glass p-2' : null
     }
 
-  return (
+    const handleLogout = () => {
+        localStorage.removeItem('swiftuser')
+        router.push('/login')
+    }
+
+
+    return (
     <main className='w-72 h-screen p-4 pt-5 bg-gradient-to-t from-purple-500 to-blue-500 text-white text-sm fixed'>
         <h1 className='text-xl font-medium text-center'>SwiftCharge</h1>
 
         <ul className='mt-16 flex flex-col gap-5'>
-            <Link href={'#'} className={`flex items-center gap-5 rounded-xl hover:shadow-lg hover:p-2 duration-700 ${setActiveMenu('account')}`}>
+            <Link href={'/account'} className={`flex items-center gap-5 rounded-xl hover:shadow-lg hover:p-2 duration-700 ${setActiveMenu('/account')}`}>
                 <IoApertureOutline size={27} className='duration-700' />
                 Overview
             </Link>
@@ -47,14 +54,14 @@ const AccountSidebar = () => {
                 SwiftCharge Prices
             </Link>
             
-            <Link href={'#'} className={`flex items-center gap-5 rounded-xl hover:shadow-lg hover:p-2 duration-700 ${setActiveMenu('cable')}`}>
+            <Link href={'/account/profile'} className={`flex items-center gap-5 rounded-xl hover:shadow-lg hover:p-2 duration-700 ${setActiveMenu('/account/profile')}`}>
                 <IoPersonCircleOutline size={27} className='duration-700' />
                 Account
             </Link>
             
-            <Link href={'#'} className={`flex items-center gap-5 rounded-xl hover:shadow-lg hover:p-2 duration-700 ${setActiveMenu('cable')}`}>
+            <Link href={'/account/settings'} className={`flex items-center gap-5 rounded-xl hover:shadow-lg hover:p-2 duration-700 ${setActiveMenu('/account/settings')}`}>
                 <IoSettingsOutline size={27} className='duration-700' />
-                Setting
+                Settings
             </Link>
             
             <Link href={'#'} className={`flex items-center gap-5 rounded-xl hover:shadow-lg hover:p-2 duration-700 ${setActiveMenu('wallet')}`}>
@@ -62,10 +69,10 @@ const AccountSidebar = () => {
                 Fund Wallet
             </Link>
             
-            <Link href={'#'} className={`flex items-center gap-5 rounded-xl hover:shadow-lg hover:p-2 duration-700 ${setActiveMenu('exit')} bottom-24 absolute`}>
+            <button onClick={handleLogout} className={`flex items-center gap-5 rounded-xl hover:shadow-lg hover:p-2 duration-700 ${setActiveMenu('exit')} bottom-24 absolute`}>
                 <IoExitOutline size={27} className='duration-700' />
                 Logout
-            </Link>
+            </button>
 
             <span className='w-60 h-0.5 bg-gray-300 bottom-11 absolute'></span>
 

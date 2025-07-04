@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import MobileNav from './MobileNav';
-import { usePathname } from 'next/navigation';
+import {usePathname, useRouter} from 'next/navigation';
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -36,8 +36,8 @@ const Navbar = () => {
         </ul>
 
         <div className="group text-white flex gap-4">
-          <Link href={'login'} className='hover:bg-gray-100 rounded-md p-3 text-blue-500'>Log in</Link>
-          <Link href={'get-started'} className='bg-blue-600 p-3 rounded-md text-blue-100 font-bold text-sm'>Get started - It&apos;s free</Link>
+          <Link href={'/login'} className='hover:bg-gray-100 rounded-md p-3 text-blue-500'>Log in</Link>
+          <Link href={'/get-started'} className='bg-blue-600 p-3 rounded-md text-blue-100 font-bold text-sm'>Get started - It&apos;s free</Link>
         </div>
       </main>
 

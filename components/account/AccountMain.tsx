@@ -11,6 +11,7 @@ const AccountMain = () => {
     const blurstatus = Boolean || JSON.parse(`${window.localStorage.getItem('blurstate')}`)
     const [user, setUser] = useState<IUser | null>(null);
     const [blurState, setBlurState] = useState(blurstatus);
+    const [showAccount, setShowAccount] = useState<boolean>(false)
     const router = useRouter();
 
     const handleCreateAccount = async () => {
@@ -24,7 +25,7 @@ const AccountMain = () => {
                 success: 'Account Created!',
             })
 
-            if (res.status == 201) {
+            if (res.status == 200) {
                 return window.location.reload();
             }
         } catch (e: any) {
@@ -45,35 +46,61 @@ const AccountMain = () => {
     return (
         <>
             <section className='w-full px-5 mt-32 flex gap-10'>
-                {user?.details.accounts?.length > 0 ? (
-                    <div
-                        className='card w-full bg-purple-600 glass p-10 text-white shadow-lg bg-[url("/cardimage.jpg")] bg-center bg-cover hover:mx-5 duration-700'>
-                        <div>
-                            <h3 className='text-lg font-medium'>Wema Bank</h3>
-                            <p className='text-xs text-gray-200'>Bank name</p>
-                        </div>
-
-                        <h3 className='mt-16 text-5xl font-bold'>8104486836</h3>
-
-                        <div className='flex items-center gap-10'>
-                            <div className='mt-5'>
-                                <h3 className='text-lg font-medium'>Walezino Info-Tech - godsonprince</h3>
-                                <p className='text-xs text-gray-200'>Account Name</p>
+                {user && user.details?.accounts?.length > 0 ? (
+                    <>
+                        <div onDoubleClick={() => setShowAccount(!showAccount)}
+                            className={`${showAccount ? 'z-50' : null} card w-[40rem] bg-purple-600 glass p-10 text-white shadow-lg bg-[url("/cardimage.jpg")] bg-center bg-cover hover:mx-5 duration-700 absolute`}>
+                            <div>
+                                <h3 className='text-lg font-medium'>{user.details?.accounts[1].bankName}</h3>
+                                <p className='text-xs text-gray-200'>Bank name</p>
                             </div>
 
-                            <div className='mt-5 '>
-                                <h3 className='text-lg font-medium'>Valid till death</h3>
-                                <p className='text-xs text-gray-200'>Expiry Date</p>
+                            <h3 className='mt-16 text-5xl font-bold'>{user.details?.accounts[1].accountNumber}</h3>
+
+                            <div className='flex items-center gap-10'>
+                                <div className='mt-5'>
+                                    <h3 className='text-lg font-medium'>{user.details?.accounts[1].accountName}</h3>
+                                    <p className='text-xs text-gray-200'>Account Name</p>
+                                </div>
+
+                                <div className='mt-5 '>
+                                    <h3 className='text-lg font-medium'>Valid till death</h3>
+                                    <p className='text-xs text-gray-200'>Expiry Date</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div onDoubleClick={() => setShowAccount(!showAccount)}
+                            className='card w-full bg-purple-600 border-2 border-white glass p-10 text-white shadow-lg bg-[url("/cardimage.jpg")] bg-center bg-cover hover:mx-5 duration-700'>
+                            <div>
+                                <h3 className='text-lg font-medium'>{user.details?.accounts[0].bankName}</h3>
+                                <p className='text-xs text-gray-200'>Bank name</p>
+                            </div>
+
+                            <h3 className='mt-16 text-5xl font-bold'>{user.details?.accounts[0].accountNumber}</h3>
+
+                            <div className='flex items-center gap-10'>
+                                <div className='mt-5'>
+                                    <h3 className='text-lg font-medium'>{user.details?.accounts[0].accountName}</h3>
+                                    <p className='text-xs text-gray-200'>Account Name</p>
+                                </div>
+
+                                <div className='mt-5 '>
+                                    <h3 className='text-lg font-medium'>Valid till death</h3>
+                                    <p className='text-xs text-gray-200'>Expiry Date</p>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+
                 ) : (
                     <div
                         className='card w-full bg-purple-600 glass p-10 text-white shadow-lg bg-[url("/cardimage.jpg")] bg-center bg-cover hover:mx-5 duration-700'>
                         <div className='flex items-center gap-10'>
                             <div className='mt-5'>
                                 <h3 className='text-lg font-medium'>NO ACCOUNT RESERVED.</h3>
-                                <p className='text-gray-200'>Click on the button below to create a reserved account number for funding. By doing this, funding becomes easy and cool.</p>
+                                <p className='text-gray-200'>Click on the button below to create a reserved account
+                                    number for funding. By doing this, funding becomes easy and cool.</p>
                                 <button onClick={handleCreateAccount} className={'btn mt-2'}>Create account</button>
                             </div>
                         </div>

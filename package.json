@@ -13,6 +13,8 @@
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.5.0",
     "mongoose": "^8.2.2",
+    "monnify-nodejs-lib": "^1.0.2",
+    "monnify-ts": "^1.0.6",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",

@@ -3,8 +3,6 @@
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react'
 import AccountSidebar from "@/components/account/AccountSidebar";
 import AccountNavbar from "@/components/account/AccountNavbar";
-import Link from "next/link";
-import {IoArrowForward} from "react-icons/io5";
 import {IUser} from "@/app/interface";
 import {useRouter} from "next/navigation";
 import {toast} from "react-toastify";

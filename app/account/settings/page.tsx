@@ -45,10 +45,21 @@ const Page = () => {
     }
 
     useEffect(() => {
-        if (localStorage.getItem('swiftuser') == null) {
-            return router.push('/login');
+        if (typeof window !== 'undefined') {
+            const userData = localStorage.getItem('swiftuser');
+            if (!userData) {
+                router.push('/login');
+                return;
+            }
+
+            try {
+                setUser(JSON.parse(userData));
+            } catch (error) {
+                console.error('Failed to parse user data:', error);
+                localStorage.removeItem('swiftuser'); // Clean up corrupted data
+                router.push('/login');
+            }
         }
-        setUser(JSON.parse(`${window.localStorage.getItem('swiftuser')}`))
     }, [router]);
 
     return (

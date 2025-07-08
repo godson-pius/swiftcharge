@@ -13,7 +13,7 @@ const Hero = () => {
                 </div>
                 <p className='mt-2 text-white lg:text-lg mb-10'>Buy/Resell Cheap Data & Airtime, Electricity Bills Payment, <br /> Cable TV Subscription, Convert Airtime to Cash</p>
 
-                <Link href={'get-started'} className='bg-blue-600 p-3 rounded-md text-blue-100 font-bold text-sm'>Get started - It&apos;s free</Link>
+                <Link href={'/get-started'} className='bg-blue-600 p-3 rounded-md text-blue-100 font-bold text-sm'>Get started - It&apos;s free</Link>
             </div>
         </section>
     </main>

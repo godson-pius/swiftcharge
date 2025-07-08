@@ -48,7 +48,7 @@ const Page = () => {
         if (localStorage.getItem('swiftuser') == null) {
             return router.push('/login');
         }
-        setUser(JSON.parse(`${localStorage.getItem('swiftuser')}`))
+        setUser(JSON.parse(`${window.localStorage.getItem('swiftuser')}`))
     }, [router]);
 
     return (

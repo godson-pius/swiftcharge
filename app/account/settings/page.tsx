@@ -7,7 +7,9 @@ import {IUser} from "@/app/interface";
 import {useRouter} from "next/navigation";
 import {toast} from "react-toastify";
 import axios from "axios";
+import dynamic from "next/dynamic";
 
+const Dynamic = dynamic(() => import('../settings/page'), { ssr: false })
 const Page = () => {
     const [user, setUser] = useState<IUser | null>(null);
     const [details, setDetails] = useState({});
@@ -75,10 +77,10 @@ const Page = () => {
                             <div className="flex flex-col col-span-2 lg:col-span-1">
                                 <label htmlFor="fullname">Full name</label>
                                 <input
-                                defaultValue={user?.details.fullname}
+                                    defaultValue={user?.details.fullname}
                                     onChange={handleChange} type="fullname" name="fullname"
-                                       id="fullname" placeholder='Enter your fullname'
-                                       className='ring-1 ring-gray-200 p-3 rounded-lg font-thin mt-1 text-sm border-none outline-none focus:ring-blue-700 duration-500'/>
+                                    id="fullname" placeholder='Enter your fullname'
+                                    className='ring-1 ring-gray-200 p-3 rounded-lg font-thin mt-1 text-sm border-none outline-none focus:ring-blue-700 duration-500'/>
                             </div>
 
                             <div className="flex flex-col col-span-2 lg:col-span-1">

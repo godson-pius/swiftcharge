@@ -28,7 +28,7 @@ const Page = () => {
                     details: res.data.data,
                     token: user!.token
                 }
-                localStorage.setItem('swiftuser', JSON.stringify(details))
+                typeof window !== "undefined" && window.localStorage.setItem('swiftuser', JSON.stringify(details))
             }
         } catch (e: any) {
             toast.error(e.response.data.error)
@@ -44,7 +44,7 @@ const Page = () => {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const userData = localStorage.getItem('swiftuser');
+            const userData = window.localStorage.getItem('swiftuser');
             if (!userData) {
                 router.push('/login');
                 return;
@@ -54,7 +54,7 @@ const Page = () => {
                 setUser(JSON.parse(userData));
             } catch (error) {
                 console.error('Failed to parse user data:', error);
-                localStorage.removeItem('swiftuser'); // Clean up corrupted data
+                window.localStorage.removeItem('swiftuser'); // Clean up corrupted data
                 router.push('/login');
             }
         }

@@ -7,7 +7,6 @@ import {toast} from "react-toastify";
 import axios from "axios";
 import {IUser} from "@/app/interface";
 import {useRouter} from "next/navigation";
-import AccountQuicklink from "@/components/account/AccountQuicklink";
 
 const Page = () => {
     const [user, setUser] = useState<IUser | null>(null);
@@ -63,7 +62,7 @@ const Page = () => {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const userData = localStorage.getItem('swiftuser');
+            const userData = window.localStorage.getItem('swiftuser');
             if (!userData) {
                 router.push('/login');
                 return;
@@ -73,7 +72,7 @@ const Page = () => {
                 setUser(JSON.parse(userData));
             } catch (error) {
                 console.error('Failed to parse user data:', error);
-                localStorage.removeItem('swiftuser'); // Clean up corrupted data
+                window.localStorage.removeItem('swiftuser'); // Clean up corrupted data
                 router.push('/login');
             }
         }

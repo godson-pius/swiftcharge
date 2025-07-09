@@ -33,6 +33,8 @@ export async function POST(request: NextRequest) {
         const body = JSON.parse(rawBody);
         const { eventType, eventData } = body;
 
+        console.log(body);
+
         switch (eventType) {
             case 'RESERVED_ACCOUNT_CREDIT': {
                 const { accountReference, amountPaid, paymentReference } = eventData;

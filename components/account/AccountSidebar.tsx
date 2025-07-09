@@ -14,7 +14,7 @@ const AccountSidebar = () => {
     }
 
     const handleLogout = () => {
-        localStorage.removeItem('swiftuser')
+        typeof window !== 'undefined' && window.localStorage.removeItem('swiftuser')
         router.push('/login')
     }
 

@@ -1,21 +1,27 @@
 'use client'
 
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {IoCallOutline, IoEyeOffOutline, IoEyeOutline, IoNotificationsOutline, IoPersonOutline} from 'react-icons/io5'
 import {toast} from 'react-toastify'
 import {IUser} from "@/app/interface";
 
 const AccountNavbar = () => {
-    const blurstatus = Boolean || JSON.parse(`${localStorage.getItem('blurstate')}`)
-    const user: IUser = JSON.parse(`${localStorage.getItem('swiftuser')}`)
-    const [blurState, setBlurState] = useState(blurstatus)
+    const [user, setUser] = useState<IUser | null>(null);
+    const [blurState, setBlurState] = useState<boolean>()
 
     const handleBlur = () => {
         setBlurState(!blurState)
-        localStorage.setItem('blurstate', JSON.stringify(blurState))
+        typeof window !== 'undefined' && window.localStorage.setItem('blurstate', JSON.stringify(blurState))
 
         toast.info('Effect will take place on reload')
     }
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setUser(JSON.parse(`${localStorage.getItem('swiftuser')}`))
+            setBlurState(Boolean || JSON.parse(`${localStorage.getItem('blurstate')}`))
+        }
+    }, [blurState])
 
     return (
         <main className='w-full h-20 px-5 pt-7'>

@@ -16,22 +16,24 @@ const Login = () => {
 
         const data = {...inputs}
 
-        try {
-            const res = await toast.promise(axios.post(`api/users/login`, data), {
-                pending: 'Authenticating',
-                success: 'Auth Successful'
-            })
+        if (typeof window !== 'undefined') {
+            try {
+                const res = await toast.promise(axios.post(`api/users/login`, data), {
+                    pending: 'Authenticating',
+                    success: 'Auth Successful'
+                })
 
-            if (res.status == 200) {
-                const details = {
-                    details: res.data.data.user,
-                    token: res.data.data.token
+                if (res.status == 200) {
+                    const details = {
+                        details: res.data.data.user,
+                        token: res.data.data.token
+                    }
+                    window.localStorage.setItem('swiftuser', JSON.stringify(details))
+                    router.push('/account')
                 }
-                localStorage.setItem('swiftuser', JSON.stringify(details))
-                router.push('/account')
+            } catch (e: any) {
+                toast.error(e.response.data.error, { autoClose: false })
             }
-        } catch (e: any) {
-            toast.error(e.response.data.error, { autoClose: false })
         }
 
     }

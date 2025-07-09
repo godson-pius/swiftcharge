@@ -8,39 +8,43 @@ import axios from "axios";
 import {useRouter} from "next/navigation";
 
 const AccountMain = () => {
-    const blurstatus = Boolean || JSON.parse(`${window.localStorage.getItem('blurstate')}`)
     const [user, setUser] = useState<IUser | null>(null);
-    const [blurState, setBlurState] = useState(blurstatus);
+    const [blurState, setBlurState] = useState<boolean>();
     const [showAccount, setShowAccount] = useState<boolean>(false)
     const router = useRouter();
 
     const handleCreateAccount = async () => {
-        const data = {
-            userId: user?.details._id
-        }
-
-        try {
-            const res = await toast.promise(axios.post(`/api/users/accounts`, data, {headers: {"Authorization": `Bearer ${user!.token}`}}), {
-                pending: 'Creating reserved account...',
-                success: 'Account Created!',
-            })
-
-            if (res.status == 200) {
-                return window.location.reload();
+        if (typeof window !== 'undefined') {
+            const data = {
+                userId: user?.details._id
             }
-        } catch (e: any) {
-            toast.error(e.response.data.error)
-            if (e.response.data.error.includes('expired')) {
-                return router.push('/login')
+
+            try {
+                const res = await toast.promise(axios.post(`/api/users/accounts`, data, {headers: {"Authorization": `Bearer ${user!.token}`}}), {
+                    pending: 'Creating reserved account...',
+                    success: 'Account Created!',
+                })
+
+                if (res.status == 200) {
+                    return window.location.reload();
+                }
+            } catch (e: any) {
+                toast.error(e.response.data.error)
+                if (e.response.data.error.includes('expired')) {
+                    return router.push('/login')
+                }
             }
         }
     }
 
     useEffect(() => {
-        if (localStorage.getItem('swiftuser') == null) {
-            return router.push('/login');
+        if (typeof window !== 'undefined') {
+            if (window.localStorage.getItem('swiftuser') == null) {
+                return router.push('/login');
+            }
+            setUser(JSON.parse(`${window.localStorage.getItem('swiftuser')}`))
+            setBlurState(Boolean || JSON.parse(`${window.localStorage.getItem('blurstate')}`))
         }
-        setUser(JSON.parse(`${localStorage.getItem('swiftuser')}`))
     }, [router]);
 
     return (

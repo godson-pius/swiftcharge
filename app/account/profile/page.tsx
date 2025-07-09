@@ -14,23 +14,25 @@ const Page = () => {
     const router = useRouter();
 
     const handleCreateAccount = async () => {
-        const data = {
-            userId: user?.details._id
-        }
-
-        try {
-            const res = await toast.promise(axios.post(`/api/users/accounts`, data, {headers: {"Authorization": `Bearer ${user!.token}`}}), {
-                pending: 'Creating reserved account...',
-                success: 'Account Created!',
-            })
-
-            if (res.status == 200) {
-                return window.location.reload();
+        if (typeof window !== "undefined") {
+            const data = {
+                userId: user?.details._id
             }
-        } catch (e: any) {
-            toast.error(e.response.data.error)
-            if (e.response.data.error.includes('expired')) {
-                return router.push('/login')
+
+            try {
+                const res = await toast.promise(axios.post(`/api/users/accounts`, data, {headers: {"Authorization": `Bearer ${user!.token}`}}), {
+                    pending: 'Creating reserved account...',
+                    success: 'Account Created!',
+                })
+
+                if (res.status == 200) {
+                    return window.location.reload();
+                }
+            } catch (e: any) {
+                toast.error(e.response.data.error)
+                if (e.response.data.error.includes('expired')) {
+                    return router.push('/login')
+                }
             }
         }
     }

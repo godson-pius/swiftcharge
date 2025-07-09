@@ -17,6 +17,7 @@ function verifyWebhookSignature(rawBody: string, signature: string) {
 }
 
 export async function POST(request: NextRequest) {
+    console.log("recieved webhook");
     try {
         await connectServer();
 

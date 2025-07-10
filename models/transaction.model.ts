@@ -15,7 +15,7 @@ export interface ITransaction extends Document {
 const TransactionSchema: Schema = new Schema(
     {
         userId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
-        type: { type: String, enum: ['deposit', 'withdrawal', 'payment', 'referral_reward'], required: true },
+        type: { type: String, enum: ['deposit', 'withdrawal', 'payment', 'referral_reward', 'service_fee'], required: true },
         amount: { type: Number, required: true },
         status: { type: String, enum: ['success', 'failed', 'pending'], default: 'pending' },
         reference: { type: String, unique: true, required: true }, // Ensures unique transaction tracking

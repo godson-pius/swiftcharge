@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
             await Transaction.create({
                 userId: user._id,
                 type: 'deposit',
-                amount: netAmount,
+                amount: Number(amountPaid),
                 status: 'success',
                 reference: paymentReference,
                 description: `Monnify reserved account funding (service fee: ${SERVICE_FEE})`,

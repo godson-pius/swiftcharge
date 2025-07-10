@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface ITransaction extends Document {
     userId: mongoose.Types.ObjectId;
-    type: 'deposit' | 'withdrawal' | 'payment';
+    type: 'deposit' | 'withdrawal' | 'payment' | 'service_fee' | 'referral_rewards';
     amount: number;
     status: 'success' | 'failed' | 'pending';
     reference: string; // Unique transaction reference

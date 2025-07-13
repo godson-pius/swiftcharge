@@ -22,6 +22,13 @@ export const WithdrawalDto = z.object({
     transactionDate: z.date().optional(),
 });
 
+export const BillPaymentDto = z.object({
+    amount: z.number({ required_error: "Amount is required" }),
+    type: z.enum(['airtime', 'data', 'electricity', 'tv']).default('airtime'),
+    provider: z.string({ required_error: "Provider is required" }),
+});
+
 
 export type DepositInput = z.infer<typeof DepositDto>;
 export type WithdrawalInput = z.infer<typeof WithdrawalDto>;
+export type BillPaymentInput = z.infer<typeof BillPaymentDto>;

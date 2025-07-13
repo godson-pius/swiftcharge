@@ -7,7 +7,14 @@ export interface ITransaction extends Document {
     status: 'success' | 'failed' | 'pending';
     reference: string; // Unique transaction reference
     description?: string; // Optional description for auditing
-    billId?: mongoose.Types.ObjectId | null; // Reference to a BillPayment, default is null
+    bill?: {
+        type: 'airtime' | 'data' | 'electricity' | 'tv'; // Type of bill
+        provider: string; // Service provider name, e.g., MTN, Airtel
+        accountNumber?: string;
+        metaData?: {
+            [key: string]: any;
+        };
+    } | null;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -20,7 +27,16 @@ const TransactionSchema: Schema = new Schema(
         status: { type: String, enum: ['success', 'failed', 'pending'], default: 'pending' },
         reference: { type: String, unique: true, required: true }, // Ensures unique transaction tracking
         description: { type: String }, // Optional field for additional details
-        billId: { type: mongoose.Types.ObjectId, ref: 'Bill', default: null }, // Links to a BillPayment if applicable
+        bill: { 
+            type: {
+                type: String,
+                enum: ['airtime', 'data', 'electricity', 'tv'],
+                required: false,
+            },
+            provider: { type: String, required: true },
+            accountNumber: { type: String },
+            metaData: { type: Object },
+         }, 
     },
     { timestamps: true }
 );

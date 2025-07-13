@@ -47,7 +47,7 @@ export async function calculateAndDistributeReferralRewards(userId: string, tran
     try {
         // Find all referrers for this user
         const referrals = await Referral.find({ userId }).sort({ generation: 1 });
-
+        if (!referrals || referrals.length === 0) 
         for (const referral of referrals) {
             // Calculate reward based on generation
             const rewardPercentage = GENERATION_REWARDS[referral.generation as keyof typeof GENERATION_REWARDS];
@@ -60,7 +60,7 @@ export async function calculateAndDistributeReferralRewards(userId: string, tran
                 userId: referral.referrerId,
                 type: 'referral_reward',
                 amount: rewardAmount,
-                description: `Referral reward from user ${userId} for generation ${referral.generation}`,
+                description: `${referral.generation} generation Referral reward`,
                 reference, // Unique reference for tracking
             });
 

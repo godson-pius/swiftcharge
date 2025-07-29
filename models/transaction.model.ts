@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface ITransaction extends Document {
     userId: mongoose.Types.ObjectId;
-    type: 'deposit' | 'withdrawal' | 'payment' | 'service_fee' | 'referral_rewards';
+    type: 'deposit' | 'withdrawal' | 'payment' | 'service_fee' | 'referral_reward';
     amount: number;
     status: 'success' | 'failed' | 'pending';
     reference: string; // Unique transaction reference
@@ -21,7 +21,7 @@ export interface ITransaction extends Document {
 
 const TransactionSchema: Schema = new Schema(
     {
-        userId: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
+        userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         type: { type: String, enum: ['deposit', 'withdrawal', 'payment', 'referral_reward', 'service_fee'], required: true },
         amount: { type: Number, required: true },
         status: { type: String, enum: ['success', 'failed', 'pending'], default: 'pending' },
@@ -31,11 +31,11 @@ const TransactionSchema: Schema = new Schema(
             type: {
                 type: String,
                 enum: ['airtime', 'data', 'electricity', 'tv'],
-                required: false,
             },
-            provider: { type: String, required: true },
+            provider: { type: String },
             accountNumber: { type: String },
-            metaData: { type: Object },
+            metaData: { type: Schema.Types.Mixed }, // Flexible metadata for bill transactions
+            required: false
          }, 
     },
     { timestamps: true }

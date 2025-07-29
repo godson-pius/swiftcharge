@@ -44,45 +44,91 @@ export async function createReferralChain(userId: string, referrerId: string | n
 }
 
 export async function calculateAndDistributeReferralRewards(userId: string, transactionAmount: number) {
-    try {
-        // Find all referrers for this user
-        const referrals = await Referral.find({ userId }).sort({ generation: 1 });
-        if (!referrals || referrals.length === 0) 
-        for (const referral of referrals) {
-            // Calculate reward based on generation
-            const rewardPercentage = GENERATION_REWARDS[referral.generation as keyof typeof GENERATION_REWARDS];
-            const rewardAmount = transactionAmount * rewardPercentage;
-            const reference = `referral-${referral._id}-${Date.now()}`;
-            if (rewardAmount <= 0) continue; // Skip if no reward is applicable
+    console.log(`[ReferralRewards] Process started for userId: ${userId}`);
 
-            // create a new transaction record for the referrer reward
-            await Transaction.create({
+    // Validate userId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        console.error(`[ReferralRewards] Invalid userId: ${userId}`);
+        throw new Error('Invalid userId');
+    }
+
+    // Validate transactionAmount
+    if (typeof transactionAmount !== 'number' || transactionAmount <= 0 || !isFinite(transactionAmount)) {
+        console.error(`[ReferralRewards] Invalid transactionAmount: ${transactionAmount}`);
+        throw new Error('Invalid transactionAmount');
+    }
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const referrals = await Referral.find({ userId }).sort({ generation: 1 }).session(session);
+        if (!referrals || referrals.length === 0) {
+            console.log(`[ReferralRewards] No referrals found for userId: ${userId}. Process completed.`);
+            await session.commitTransaction();
+            session.endSession();
+            return;
+        }
+
+        for (const referral of referrals) {
+            // Validate referral fields
+            if (!referral.referrerId || !mongoose.Types.ObjectId.isValid(referral.referrerId)) {
+                console.warn(`[ReferralRewards] Skipping referral with invalid referrerId: ${referral.referrerId}`);
+                continue;
+            }
+            if (typeof referral.generation !== 'number' || referral.generation < 1 || referral.generation > 7) {
+                console.warn(`[ReferralRewards] Skipping referral with invalid generation: ${referral.generation}`);
+                continue;
+            }
+
+            const rewardPercentage = GENERATION_REWARDS[referral.generation as keyof typeof GENERATION_REWARDS];
+            let rewardAmount = transactionAmount * rewardPercentage;
+
+            // Prevent negative or zero rewards, round to 2 decimals
+            rewardAmount = Math.max(0, Math.round(rewardAmount * 100) / 100);
+            if (rewardAmount <= 0) {
+                console.log(`[ReferralRewards] Skipping referralId: ${referral._id} due to zero reward.`);
+                continue;
+            }
+
+            // Unique reference using referralId and ISO timestamp
+            const reference = `referral-${referral._id}-${new Date().toISOString()}`;
+
+            await Transaction.create([{
                 userId: referral.referrerId,
                 type: 'referral_reward',
                 amount: rewardAmount,
                 description: `${referral.generation} generation Referral reward`,
-                reference, // Unique reference for tracking
-            });
+                reference,
+            }], { session });
+            console.log(`[ReferralRewards] Transaction created for referrerId: ${referral.referrerId}, amount: ${rewardAmount}, generation: ${referral.generation}`);
 
-            // Update referral record with the reward
             await Referral.findByIdAndUpdate(referral._id, {
                 $inc: { amount: rewardAmount }
-            });
+            }, { session });
+            console.log(`[ReferralRewards] Referral record updated for referralId: ${referral._id}, incremented amount by ${rewardAmount}`);
 
-            // Update referrer's balance
             await User.findByIdAndUpdate(referral.referrerId, {
                 $inc: { balance: rewardAmount }
-            });
+            }, { session });
+            console.log(`[ReferralRewards] User balance updated for referrerId: ${referral.referrerId}, incremented balance by ${rewardAmount}`);
 
-            //update transaction status to success
             await Transaction.updateOne(
                 { userId: referral.referrerId, type: 'referral_reward', reference },
-                { $set: { status: 'success' } }
+                { $set: { status: 'success' } },
+                { session }
             );
+            console.log(`[ReferralRewards] Transaction status updated to success for reference: ${reference}`);
         }
+
+        await session.commitTransaction();
+        session.endSession();
+        console.log(`[ReferralRewards] Process completed for userId: ${userId}`);
         return;
     } catch (error) {
-        console.error('Error distributing referral rewards:', error);
+        await session.abortTransaction();
+        session.endSession();
+        console.error(`[ReferralRewards] Process failed for userId: ${userId}. Error: ${(error as Error)?.message || error}`);
         throw error;
     }
 }

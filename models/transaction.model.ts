@@ -34,8 +34,7 @@ const TransactionSchema: Schema = new Schema(
             },
             provider: { type: String },
             accountNumber: { type: String },
-            metaData: { type: Schema.Types.Mixed }, // Flexible metadata for bill transactions
-            required: false
+            metaData: { type: Schema.Types.Mixed },
          }, 
     },
     { timestamps: true }

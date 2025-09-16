@@ -4,7 +4,7 @@ import {CreateUserDto} from "@/types/user.type";
 import { formatError } from "@/utils/errorHandler";
 import { createReferralChain } from "@/utils/referral";
 import { nanoid } from "nanoid";
-import {NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 
 /**
  * Create a new user
@@ -14,7 +14,7 @@ import {NextResponse} from "next/server";
  * @description This function handles the creation of a new user by collecting data from the request body
  * and saving it to the database. It also handles errors and returns appropriate responses.
  */
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         await connectServer();
         const _data = await request.json();

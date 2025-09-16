@@ -30,7 +30,7 @@ const TransactionSchema: Schema = new Schema(
         bill: { 
             type: {
                 type: String,
-                enum: ['airtime', 'data', 'electricity', 'tv'],
+                enum: ['airtime', 'data', 'electricity-bill', 'tv-subscription', 'education', 'other-services', 'insurance'],
             },
             provider: { type: String },
             accountNumber: { type: String },

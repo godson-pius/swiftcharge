@@ -63,19 +63,19 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({
                 success: false,
                 message: _fallback.message
-            }, {status: 500});
+            }, { status: 500 });
         }
 
         // Call the external API to make the payment
         const payBill = await axios.post(
             `${VTU_BASE_URL}pay`, {
-                request_id,
-                serviceID,
-                billersCode,
-                phone,
-                variation_code,
-                amount
-            },
+            request_id,
+            serviceID,
+            billersCode,
+            phone,
+            variation_code,
+            amount
+        },
             {
                 headers: {
                     "api-key": VTU_API_KEY,
@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
             success: true,
             message: "Bill payment successful",
-            data: {transaction}
+            data: { transaction, user }
         });
 
     } catch (error) {
@@ -207,11 +207,11 @@ const fallback = async (vtBalance: number, userBalance: number, transactionAmoun
     }
 
     if (transactionAmount >= vtBalance) {
-        // fund VTPass
+        // fund VTPassl
         // error in process of funding mail admin
         return {
             success: false,
-            message: "Something went wrong \n please retry transaction"
+            message: "Something went wrong please retry transaction"
         }
     }
 }

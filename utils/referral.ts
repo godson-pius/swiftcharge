@@ -1,7 +1,7 @@
 // utils/referral.ts
-import User from '@/models/user.model';
-import Referral from '@/models/referal.model';
-import mongoose from 'mongoose';
+import User, { IUser } from '@/models/user.model';
+import Referral, { IReferral } from '@/models/referal.model';
+import mongoose, { FilterQuery } from 'mongoose';
 import { Transaction } from '@/models/transaction.model';
 
 // Referral reward percentages for each generation
@@ -131,4 +131,38 @@ export async function calculateAndDistributeReferralRewards(userId: string, tran
         console.error(`[ReferralRewards] Process failed for userId: ${userId}. Error: ${(error as Error)?.message || error}`);
         throw error;
     }
+}
+
+/**
+ * Get referral chain (descendants) for a given user acting as the referrer/parent.
+ * This reverses the intent of `createReferralChain` by querying the Referral records
+ * that were created for referred users. Returns a flat array of { user, generation }.
+ */
+export async function getReferralChain(parentId: string, maxGenerations = 7): Promise<Array<{ user: IUser; generation: number }>> {
+    if (!parentId) throw new Error('parentId is required');
+
+    // Referral.referrerId is stored as ObjectId. If parentId isn't a valid ObjectId, return empty.
+    if (!mongoose.Types.ObjectId.isValid(parentId)) return [];
+
+    if (!Number.isInteger(maxGenerations) || maxGenerations < 1) maxGenerations = 7;
+
+    const query: FilterQuery<IReferral> = {
+        referrerId: new mongoose.Types.ObjectId(parentId)
+    };
+    if (maxGenerations) {
+        query.generation = { $lte: maxGenerations };
+    }
+
+    type ReferralWithUser = Omit<IReferral, 'userId'> & { userId: IUser };
+
+    // Populate the referred user (userId) and return plain objects
+    const referrals = await Referral.find(query)
+        .sort({ generation: 1 })
+        .populate<{ userId: IUser }>('userId')
+        .lean<ReferralWithUser[]>();
+
+    return referrals.map(r => ({
+        user: r.userId,
+        generation: r.generation
+    }))
 }

@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
         const data = BillPaymentDto.parse(_data);
 
         // Connect to the database if needed
-        await connectServer();
+        connectServer();
 
         // Generate a unique request ID
         const request_id = generateRequestId("YUs83meikd");
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
             auth.userId,
             data.serviceId,
             data.phone,
-            data.phone, // You may want to verify if this is correct for billersCode
+            data.billersCode || data.phone,
             data.variationCode,
             data.amount,
             data.identifier

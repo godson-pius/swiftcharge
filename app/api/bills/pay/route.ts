@@ -118,9 +118,12 @@ export async function POST(request: NextRequest) {
                 type: identifier,
                 provider: serviceID,
                 accountNumber: phone,
-                metaData: payBill.data.content.transactions
+                metaData:
+                    payBill.data
+
             }
         })
+
 
         if (!transaction) {
             await Transaction.create({
@@ -139,7 +142,7 @@ export async function POST(request: NextRequest) {
             })
             throw new Error("Transaction failed");
         }
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).select("-password");
         user.balance = user.balance - amount;
         await user.save();
         // Return the API response on successful payment

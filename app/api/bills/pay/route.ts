@@ -118,9 +118,12 @@ export async function POST(request: NextRequest) {
                 type: identifier,
                 provider: serviceID,
                 accountNumber: phone,
-                metaData: payBill.data.content.transactions
+                metaData:
+                    payBill.data
+
             }
         })
+
 
         if (!transaction) {
             await Transaction.create({

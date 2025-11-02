@@ -42,8 +42,17 @@ export const BillPaymentDto = z.object({
         .optional()
 });
 
+export const VerifyBillerDto = z.object({
+    serviceId: z.string({ required_error: "ServiceId is required" }),
+    variationCode: z.string().optional(),
+    billersCode: z
+        .string({ required_error: "billersCode is required" })
+        .regex(/^\d+$/, "billersCode must be a string of digits") // Only digits allowed
+})
+
 // request_id, serviceID, phone, billersCode, variation_code, amount
 
+export type VerifyBillerInput = z.infer<typeof VerifyBillerDto>;
 export type DepositInput = z.infer<typeof DepositDto>;
 export type WithdrawalInput = z.infer<typeof WithdrawalDto>;
 export type BillPaymentInput = z.infer<typeof BillPaymentDto>;

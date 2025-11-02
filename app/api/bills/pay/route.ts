@@ -172,7 +172,7 @@ const generateRequestId = (additionalString = '') => {
     // Format the date into YYYYMMDDHHMM
     const datePart = now
         .replace(/[^0-9]/g, '') // Remove all non-numeric characters
-        .slice(0, 12); // Get first 12 characters (YYYYMMDDHHMM)
+        .slice(2, 14); // Get first 12 characters (YYYYMMDDHHMM)
 
     // Concatenate with the additional string (if provided)
     return datePart + additionalString;

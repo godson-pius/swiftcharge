@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
         ];
 
         // Call the external API to make the payment
-        const payBill = await axios.post(
+        const verify = await axios.post(
             `${VTU_BASE_URL}merchant-verify`, {
             request_id,
             serviceID,
@@ -52,6 +52,13 @@ export async function POST(request: NextRequest) {
             }
         );
 
+        console.log({ verify })
+
+        return NextResponse.json({
+            success: true,
+            message: "Bill payment successful",
+            data: { verificationData: verify.data }
+        });
 
     } catch (error) {
         console.error("Error processing payment:", error); // Log the error for debugging

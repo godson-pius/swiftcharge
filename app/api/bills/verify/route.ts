@@ -58,14 +58,14 @@ export async function POST(request: NextRequest) {
                 success: false,
                 message: verify.data.content.error,
                 error: { verificationData: verify.data }
-            });
+            }, {status: 400});
         }
 
         return NextResponse.json({
             success: true,
             message: "Verified",
             data: { verificationData: verify.data }
-        }, { status: 400 });
+        });
 
     } catch (error) {
         console.error("Error processing payment:", error); // Log the error for debugging

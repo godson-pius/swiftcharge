@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 const VTU_API_KEY = process.env.VTU_API_KEY!;
 const VTU_BASE_URL = process.env.VTU_BASE_URL!;
 const VTU_SECRET_KEY = process.env.VTU_SECRET_KEY!;
-const VTU_PUBLIC_KEY = process.env.VTU_PUBLIC_KEY!;
+// const VTU_PUBLIC_KEY = process.env.VTU_PUBLIC_KEY!;
 
 export async function POST(request: NextRequest) {
     try {
@@ -29,8 +29,7 @@ export async function POST(request: NextRequest) {
         const request_id = generateRequestId("YUs83meikd");
 
         // Destructure user and service data
-        const [userId, serviceID, billersCode, variation_code] = [
-            auth.userId,
+        const [serviceID, billersCode, variation_code] = [
             data.serviceId,
             data.billersCode,
             data.variationCode
@@ -52,13 +51,21 @@ export async function POST(request: NextRequest) {
             }
         );
 
-        console.log({ verify })
+        // console.log({ verify })
+
+        if (verify.data.content.error) {
+            return NextResponse.json({
+                success: false,
+                message: verify.data.content.error,
+                error: { verificationData: verify.data }
+            });
+        }
 
         return NextResponse.json({
             success: true,
-            message: "Bill payment successful",
+            message: "Verified",
             data: { verificationData: verify.data }
-        });
+        }, { status: 400 });
 
     } catch (error) {
         console.error("Error processing payment:", error); // Log the error for debugging

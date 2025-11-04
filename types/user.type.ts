@@ -30,6 +30,7 @@ export const UpdateUserDto = z.object({
   isActive: z.boolean().optional(),
   lastLogin: z.date().optional(),
   emailVerified: z.boolean().optional(),
+  pin: z.string().max(4).min(4).optional()
 });
 
 export type LoginUserInput = z.infer<typeof LoginUserDto>;

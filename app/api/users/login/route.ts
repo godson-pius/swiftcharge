@@ -10,21 +10,21 @@ export async function POST(request: Request) {
         await connectServer();
         const body = await request.json();
         const data = LoginUserDto.parse(body)
-        
-        const user = await User.findOne({email: data.email});
-        
+
+        const user = await User.findOne({ email: data.email });
+
         if (!user) {
-            return  NextResponse.json({error: "No user found"}, { status: 404 });
-        } 
+            return NextResponse.json({ error: "No user found" }, { status: 404 });
+        }
 
         const isPasswordValid = await user.comparePassword(data.password);
         if (!isPasswordValid) {
-            return NextResponse.json({error: "Incorrect password"}, { status: 401 });
+            return NextResponse.json({ error: "Incorrect password" }, { status: 401 });
         }
 
         const jwtSecret: Secret = process.env.JWT_SECRET as string;
-        const jwtOptions: SignOptions = { 
-            expiresIn: '3h' 
+        const jwtOptions: SignOptions = {
+            expiresIn: '3h'
         };
 
         const token = jwt.sign(
@@ -32,12 +32,12 @@ export async function POST(request: Request) {
             jwtSecret,
             jwtOptions
         );
-
-        const { password, ...userData } = user.toObject();
-        return NextResponse.json({ data: { user: userData, token } }, { status: 200 });
+        const referrals = await User.find({ parentId: user.id });
+        const { password, pin, ...userData } = user.toObject();
+        return NextResponse.json({ data: { user: userData, token, referrals } }, { status: 200 });
 
     } catch (error) {
         const formatedError = formatError(error)
         return NextResponse.json({ error: formatedError.errors[0].message }, { status: formatedError.status });
-    } 
+    }
 }

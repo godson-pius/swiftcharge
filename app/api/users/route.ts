@@ -1,10 +1,10 @@
 import connectServer from "@/config/mongoose";
 import User from "@/models/user.model";
-import {CreateUserDto} from "@/types/user.type";
+import { CreateUserDto } from "@/types/user.type";
 import { formatError } from "@/utils/errorHandler";
 import { createReferralChain } from "@/utils/referral";
 import { nanoid } from "nanoid";
-import {NextRequest, NextResponse} from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * Create a new user
@@ -68,6 +68,7 @@ export async function POST(request: NextRequest) {
         // Remove password from response
         const userObj = user.toObject();
         delete userObj.password;
+        delete userObj.pin;
 
         return NextResponse.json({ user: userObj }, { status: 201 });
     } catch (error) {
@@ -76,10 +77,11 @@ export async function POST(request: NextRequest) {
     }
 }
 
-export async function GET(request: Request) {
+export async function GET(__request: Request) {
     try {
-        const users = await User.find({});
-        return NextResponse.json({users}, {status: 200});
+        // Exclude sensitive fields at the query level and return plain objects
+        const users = await User.find().select('-password -pin');
+        return NextResponse.json({ users }, { status: 200 });
     } catch (error) {
         const formatedError = formatError(error);
         return NextResponse.json({ error: formatedError.errors[0].message }, { status: formatedError.status });

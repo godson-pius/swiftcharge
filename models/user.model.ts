@@ -8,12 +8,12 @@ export interface IUser extends Document {
     phone?: string;
     address?: string;
     password: string;
-    refId: string; 
-    parentId?: string | null; 
-    isActive: boolean; 
+    refId: string;
+    parentId?: string | null;
+    isActive: boolean;
     lastLogin: Date;
     emailVerified: boolean;
-    role: 'user' | 'admin'; 
+    role: 'user' | 'admin';
     balance: number;
     accounts: Array<{ bankCode: string; accountNumber: string; bankName: string; accountName: string; }>;
     firstDeposit: boolean;
@@ -27,15 +27,16 @@ const userSchema = new Schema(
         username: { type: String, required: [true, 'Username is required'], unique: true, lowercase: true },
         email: { type: String, required: [true, 'Email is required'], unique: true, lowercase: true },
         phone: { type: String, unique: true },
-        address: { type: String},
+        address: { type: String },
         password: { type: String, required: [true, 'Password is required'] },
-        refId: { type: String, required: true, unique: true }, 
-        parentId: { type: String, default: null }, 
-        isActive: { type: Boolean, default: true }, 
-        role: { type: String, enum: ['user', 'admin'], default: 'user' }, 
+        refId: { type: String, required: true, unique: true },
+        parentId: { type: String, default: null },
+        isActive: { type: Boolean, default: true },
+        role: { type: String, enum: ['user', 'admin'], default: 'user' },
         balance: { type: Number, default: 0 },
         firstDeposit: { type: Boolean, default: false },
         lastLogin: { type: Date, default: null },
+        pin: { type: String, default: "0000" },
         accounts: [
             {
                 bankCode: { type: String },
@@ -49,9 +50,10 @@ const userSchema = new Schema(
 );
 
 userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next();
+    if (!this.isModified("password") && !this.isModified("pin")) return next();
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
+    this.pin = await bcrypt.hash(this.pin, salt);
     next();
 });
 
@@ -60,10 +62,14 @@ userSchema.methods.comparePassword = async function (candidatePassword: string):
     return await bcrypt.compare(candidatePassword, this.password);
 };
 
+userSchema.methods.comparePin = async function (candidatePin: string): Promise<boolean> {
+    return await bcrypt.compare(candidatePin, this.pin);
+};
+
 
 userSchema.index(
-  { phone: 1 },
-  { unique: true, partialFilterExpression: { phone: { $type: "string", $ne: null } } }
+    { phone: 1 },
+    { unique: true, partialFilterExpression: { phone: { $type: "string", $ne: null } } }
 );
 
 let User: any;

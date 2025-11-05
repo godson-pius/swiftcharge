@@ -23,6 +23,7 @@ export const WithdrawalDto = z.object({
 });
 
 export const BillPaymentDto = z.object({
+    pin: z.string({ required_error: "Pin is required" }),
     amount: z.number({ required_error: "Amount is required" }),
     identifier: z
         .enum(['airtime', 'data', 'electricity-bill', 'tv-subscription', 'education', 'other-services', 'insurance'])

@@ -23,8 +23,9 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
         const referrals = await User.find({ parentId: user.id });
+        const { pin, ...rest } = user;
 
-        return NextResponse.json({ data: { user, referrals } }, { status: 200 });
+        return NextResponse.json({ data: { user: rest, referrals } }, { status: 200 });
     } catch (error) {
         const formatedError = formatError(error);
         return NextResponse.json({ error: formatedError.errors[0].message }, { status: formatedError.status });
@@ -42,7 +43,7 @@ export async function PUT(request: NextRequest) {
         const body = await request.json();
         const data = UpdateUserDto.parse(body);
 
-        const user = await User.findByIdAndUpdate(auth.userId, data, { new: true }).select('-password');
+        const user = await User.findByIdAndUpdate(auth.userId, data, { new: true }).select('-password -pin');
 
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });

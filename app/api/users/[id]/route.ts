@@ -11,7 +11,7 @@ export async function GET(request: NextRequest, context: { params: { id: string 
             return NextResponse.json({ error: auth.error }, { status: auth.status });
         }
         console.log(auth);
-        
+
         // role based accesss control
         if (auth.role !== 'admin') {
             return NextResponse.json({ error: "Unauthorized access" }, { status: 403 });
@@ -28,8 +28,9 @@ export async function GET(request: NextRequest, context: { params: { id: string 
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
+        const { password, pin, ...userObj } = user;
 
-        return NextResponse.json({ data: user }, { status: 200 });
+        return NextResponse.json({ data: { user: userObj } }, { status: 200 });
     } catch (error) {
         const formatedError = formatError(error);
         return NextResponse.json({ error: formatedError.errors[0].message }, { status: formatedError.status });

@@ -7,7 +7,7 @@ import { JwtPayload } from 'jsonwebtoken';
 export async function authenticateRequest(request: NextRequest) {
     try {
         const token = request.headers.get("authorization")?.split(" ")[1];
-        
+
         if (!token) {
             return { error: "No token provided", status: 401 };
         }

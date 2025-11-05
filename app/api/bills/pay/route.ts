@@ -43,7 +43,17 @@ export async function POST(request: NextRequest) {
             data.amount,
             data.identifier
         ];
-        const [userBalance, vtBalance] = [await getUserBalance(userId), await getVTBalance()];
+        const [userInfo, vtBalance] = [await getUserInfo(userId), await getVTBalance()];
+        const userBalance = userInfo.balance;
+
+        const isPin = await userInfo.comparePin(data.pin);
+
+        if (!isPin) {
+            return NextResponse.json({
+                success: false,
+                message: "Incorrect pin"
+            }, { status: 400 });
+        }
 
         const _fallback = await fallback(vtBalance, userBalance, amount);
         if (_fallback?.success === false) {
@@ -191,13 +201,13 @@ const getVTBalance = async () => {
     return Number(response.data.contents.balance);
 }
 
-const getUserBalance = async (userId: string) => {
+const getUserInfo = async (userId: string) => {
     const user = await User.findById(userId);
     if (!user) {
         return "user not found";
     }
-    const balance = user.balance;
-    return balance;
+
+    return user;
 }
 
 const fallback = async (vtBalance: number, userBalance: number, transactionAmount: number) => {

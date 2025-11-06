@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
         }
 
         connectServer();
-        const user = await User.findById(auth.userId).select('-password');
+        const user = await User.findById(auth.userId);
 
 
 
@@ -23,9 +23,19 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
         const referrals = await User.find({ parentId: user.id });
-        const { pin, ...rest } = user;
+        const { password, pin, ...userData } = user.toObject();
 
-        return NextResponse.json({ data: { user: rest, referrals } }, { status: 200 });
+        const safeReferrals = referrals.map((ref: { _id: string; fullname: string; username: string; email: string; phone: string; }) => {
+            return {
+                id: ref._id,
+                fullname: ref.fullname,
+                username: ref.username,
+                email: ref.email,
+                phone: ref.phone
+            }
+        })
+
+        return NextResponse.json({ data: { user: userData, referrals: safeReferrals } }, { status: 200 });
     } catch (error) {
         const formatedError = formatError(error);
         return NextResponse.json({ error: formatedError.errors[0].message }, { status: formatedError.status });

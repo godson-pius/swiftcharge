@@ -23,14 +23,12 @@ export const UpdateUserDto = z.object({
   fullname: z.string().optional(),
   username: z.string().min(3).optional(),
   email: z.string().email().optional(),
-  password: z.string().min(6).optional(),
   phone: z.string().optional(),
   address: z.string().optional(),
   avatar: z.string().optional(),
   isActive: z.boolean().optional(),
   lastLogin: z.date().optional(),
-  emailVerified: z.boolean().optional(),
-  pin: z.string().max(4).min(4).optional()
+  emailVerified: z.boolean().optional()
 });
 
 export type LoginUserInput = z.infer<typeof LoginUserDto>;

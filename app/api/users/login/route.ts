@@ -34,7 +34,17 @@ export async function POST(request: Request) {
         );
         const referrals = await User.find({ parentId: user.id });
         const { password, pin, ...userData } = user.toObject();
-        return NextResponse.json({ data: { user: userData, token, referrals } }, { status: 200 });
+
+        const safeReferrals = referrals.map((ref: { _id: string; fullname: string; username: string; email: string; phone: string; }) => {
+            return {
+                id: ref._id,
+                fullname: ref.fullname,
+                username: ref.username,
+                email: ref.email,
+                phone: ref.phone
+            }
+        })
+        return NextResponse.json({ data: { user: userData, token, referrals: safeReferrals } }, { status: 200 });
 
     } catch (error) {
         const formatedError = formatError(error)

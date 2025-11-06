@@ -16,7 +16,7 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function POST(request: NextRequest) {
     try {
-        await connectServer();
+        connectServer();
         const _data = await request.json();
         const data = CreateUserDto.parse(_data);
 

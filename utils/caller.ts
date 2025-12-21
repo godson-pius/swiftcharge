@@ -19,3 +19,13 @@ export const verifyIUC = async (data: any) => {
   const response = await axios.post(`/bills/verify`, data);
   return response.data;
 };
+
+export const getUserTrx = async () => {
+  const response = await axios.get(`/transactions`);
+  return response.data;
+};
+
+export const updateUserPin = async (data: any) => {
+  const response = await axios.post(`/users/me/update-pin`, data);
+  return response.data;
+};

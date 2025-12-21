@@ -12,7 +12,7 @@ const AccountQuicklink = () => {
 
                 <section className='w-full grid grid-cols-3 gap-5 my-4'>
 
-                    <Link href={'#'}>
+                    <Link href={'/account/data'}>
                         <div className='card bg-white p-5 overflow-hidden w-full hover:glass duration-700 transition'>
                             <span className='bg-black w-5 h-5 rounded-full absolute -top-1 left-0 z-50'></span>
                             <div className=''>
@@ -24,7 +24,7 @@ const AccountQuicklink = () => {
                         </div>
                     </Link>
 
-                    <Link href={'#'}>
+                    <Link href={'/account/airtime'}>
                         <div className='card bg-white p-5 overflow-hidden w-full hover:glass duration-700 transition'>
                             <span className='bg-black w-5 h-5 rounded-full absolute -top-1 left-0 z-50'></span>
                             <div className=''>
@@ -36,7 +36,7 @@ const AccountQuicklink = () => {
                         </div>
                     </Link>
 
-                    <Link href={'#'}>
+                    <Link href={'/account/cable'}>
                         <div className='card bg-white p-5 overflow-hidden w-full hover:glass duration-700 transition'>
                             <span className='bg-black w-5 h-5 rounded-full absolute -top-1 left-0 z-50'></span>
                             <div className=''>
@@ -48,7 +48,7 @@ const AccountQuicklink = () => {
                         </div>
                     </Link>
 
-                    <Link href={'#'}>
+                    <Link href={'/account/bill'}>
                         <div className='card bg-white p-5 overflow-hidden w-full hover:glass duration-700 transition'>
                             <span className='bg-black w-5 h-5 rounded-full absolute -top-1 left-0 z-50'></span>
                             <div className=''>

@@ -7,10 +7,17 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import AccountSidebar from "@/components/account/AccountSidebar";
 import AccountNavbar from "@/components/account/AccountNavbar";
+import {FiCopy, FiXCircle} from "react-icons/fi";
+import Modal from "@/components/Modal";
+import {updateUserPin} from "@/utils/caller";
 
 const AccountSettings = () => {
   const [user, setUser] = useState<IUser | null>(null);
   const [details, setDetails] = useState({});
+  const [pinModalIsVisible, setPinModalIsVisible] = useState<boolean>(false);
+  const [inputs, setInputs] = useState<Record<string, any>>({});
+
+
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -48,6 +55,16 @@ const AccountSettings = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
   };
+
+  const handleUpdatePin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const res = await updateUserPin(inputs);
+      console.log(res);
+    } catch (e) {
+      toast.error(`Could not update pin! Please try again later. ${e}`);
+    }
+  }
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -133,19 +150,19 @@ const AccountSettings = () => {
               </div>
             </div>
 
-            <div className="flex flex-col col-span-2 lg:col-span-1">
-              <label htmlFor="pin">Transaction Pin</label>
-              <input
-                onChange={handleChange}
-                type="password"
-                maxLength={4}
-                inputMode="numeric"
-                name="pin"
-                id="pin"
-                placeholder="Set / Change Pin"
-                className="ring-1 ring-gray-200 p-3 rounded-lg font-thin mt-1 text-sm border-none outline-none focus:ring-blue-700 duration-500"
-              />
-            </div>
+            {/*<div className="flex flex-col col-span-2 lg:col-span-1">*/}
+            {/*  <label htmlFor="pin">Transaction Pin</label>*/}
+            {/*  <input*/}
+            {/*    onChange={handleChange}*/}
+            {/*    type="password"*/}
+            {/*    maxLength={4}*/}
+            {/*    inputMode="numeric"*/}
+            {/*    name="pin"*/}
+            {/*    id="pin"*/}
+            {/*    placeholder="Set / Change Pin"*/}
+            {/*    className="ring-1 ring-gray-200 p-3 rounded-lg font-thin mt-1 text-sm border-none outline-none focus:ring-blue-700 duration-500"*/}
+            {/*  />*/}
+            {/*</div>*/}
 
             <button
               type="submit"
@@ -154,8 +171,68 @@ const AccountSettings = () => {
               Update account
             </button>
           </form>
+
+          <p onClick={() => setPinModalIsVisible(true)} className={'my-3 float-end underline duration-500 hover:scale-105 cursor-pointer'}>change your transaction pin here</p>
         </section>
       </div>
+
+      <Modal isOpen={pinModalIsVisible}>
+        <FiXCircle onClick={() => setPinModalIsVisible(false)} className={'size-6 float-end text-gray-500 duration-500 hover:text-black cursor-pointer hover:scale-105'} />
+        <div className="flex flex-col items-start gap-3 mt-5">
+          <form
+              className="w-full shadow h-max rounded-xl p-5"
+              onSubmit={handleUpdatePin}
+          >
+            {/*<div className="flex flex-col col-span-2 lg:col-span-1">*/}
+            {/*  <label htmlFor="pin">Old Transaction Pin</label>*/}
+            {/*  <input*/}
+            {/*    onChange={handleChange}*/}
+            {/*    type="password"*/}
+            {/*    maxLength={4}*/}
+            {/*    inputMode="numeric"*/}
+            {/*    name="pin"*/}
+            {/*    id="pin"*/}
+            {/*    placeholder="Enter old pin"*/}
+            {/*    className="ring-1 ring-gray-200 p-3 rounded-lg font-thin mt-1 text-sm border-none outline-none focus:ring-blue-700 duration-500"*/}
+            {/*  />*/}
+            {/*</div>*/}
+
+            <div className="flex flex-col col-span-2 lg:col-span-1">
+              <label htmlFor="password">Enter password</label>
+              <input
+                onChange={(e) => setInputs({ ...inputs, [e.target.name]: e.target.value })}
+                type="password"
+                name="password"
+                id="password"
+                required
+                placeholder="Enter password"
+                className="ring-1 ring-gray-200 p-3 rounded-lg font-thin mt-1 text-sm border-none outline-none focus:ring-blue-700 duration-500"
+              />
+            </div>
+
+            <div className="flex flex-col col-span-2 lg:col-span-1 mt-5">
+              <label htmlFor="pin">New Transaction Pin <span className={'text-xs text-blue-500'}>(PIN must be 4 digits)</span> </label>
+              <input onChange={(e) => setInputs({ ...inputs, [e.target.name]: e.target.value })}
+                type="password"
+                maxLength={4}
+                inputMode="numeric"
+                name="pin"
+                id="pin"
+                required
+                placeholder="Set new Pin"
+                className="ring-1 ring-gray-200 p-3 rounded-lg font-thin mt-1 text-sm border-none outline-none focus:ring-blue-700 duration-500"
+              />
+            </div>
+
+            <button
+                type="submit"
+                className="w-full btn text-blue-100 bg-blue-500 hover:bg-blue-200 hover:border-2 hover:border-blue-500 hover:text-blue-500 hover:shadow-lg rounded-lg px-10 duration-700 my-5"
+            >
+              Update transaction pin
+            </button>
+          </form>
+        </div>
+      </Modal>
     </main>
   );
 };

@@ -148,9 +148,6 @@ const AccountMain = () => {
                 $ {user?.details.balance.toLocaleString()}
               </h2>
               <p className="ml-1 text-gray-200">Current Balance</p>
-              <p className="ml-1 text-xs bottom-3 absolute text-blue-100">
-                Powered by swiftcharge
-              </p>
             </div>
 
             <div
@@ -164,9 +161,6 @@ const AccountMain = () => {
                 100
               </h2>
               <p className="ml-1 text-gray-200">Total Referrals</p>
-              <p className="ml-1 text-xs bottom-3 absolute text-blue-100">
-                Powered by swiftcharge
-              </p>
             </div>
           </div>
 
@@ -287,9 +281,6 @@ const AccountMain = () => {
             </div>
 
             {/* end each person */}
-            <p className="ml-1 text-xs bottom-3 absolute text-blue-100">
-              Powered by swiftcharge
-            </p>
           </div>
         </div>
       </section>

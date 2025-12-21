@@ -77,3 +77,20 @@ export interface IVariation {
   variation_amount: string;
   fixedPrice: string;
 }
+
+export interface IUserTrx {
+  _id: string;
+  userId: string;
+  type: string;
+  amount: number;
+  status: string;
+  reference: string;
+  description: string;
+  bill: {
+    type: string;
+    provider: string;
+    accountNumber: string;
+  }
+  createdAt: string;
+  updatedAt: string;
+}

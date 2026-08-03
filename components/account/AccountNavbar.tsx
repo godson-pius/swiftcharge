@@ -1,7 +1,7 @@
 "use client";
 
 import React, {useEffect, useState} from "react";
-import {IoCallOutline, IoEyeOffOutline, IoEyeOutline, IoNotificationsOutline, IoPersonOutline,} from "react-icons/io5";
+import {IoCallOutline, IoEyeOffOutline, IoEyeOutline, IoNotificationsOutline, IoPersonOutline, IoMenuOutline} from "react-icons/io5";
 import {toast} from "react-toastify";
 import {IUser} from "@/app/interface";
 
@@ -28,15 +28,23 @@ const AccountNavbar = () => {
     }, [blurState]);
 
     return (
-        <main className="w-full h-20 px-5 pt-7">
+        <main className="w-full h-auto px-5 py-5 lg:h-20 lg:pt-7">
             <div className="w-full flex items-center justify-between">
-                <div>
-                    <h2 className="text-2xl font-medium">SwiftCharge</h2>
-                    <p className="w-[38rem] text-gray-600 mt-1 text-xs font-thin">
-                        SwiftCharge is a next-generation Virtual Top-Up and Web3 payment
-                        platform that lets users buy airtime, data, and pay utility bills
-                        instantly, using either local currency or digital assets like USDT.
-                    </p>
+                <div className="flex items-center gap-3">
+                    <button 
+                        className="lg:hidden p-2 hover:bg-gray-100 rounded-lg duration-300"
+                        onClick={() => window.dispatchEvent(new CustomEvent("toggle-sidebar"))}
+                    >
+                        <IoMenuOutline size={25} />
+                    </button>
+                    <div>
+                        <h2 className="text-xl lg:text-2xl font-medium">SwiftCharge</h2>
+                        <p className="max-w-md lg:w-[38rem] text-gray-600 mt-1 text-[10px] lg:text-xs font-thin hidden sm:block">
+                            SwiftCharge is a next-generation Virtual Top-Up and Web3 payment
+                            platform that lets users buy airtime, data, and pay utility bills
+                            instantly, using either local currency or digital assets like USDT.
+                        </p>
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -61,8 +69,8 @@ const AccountNavbar = () => {
                         <div className="flex justify-center items-center rounded-full ring-1 ring-blue-600 p-2">
                             <IoPersonOutline size={17}/>
                         </div>
-                        <div className="flex flex-col">
-                            <h4 className="text-sm font-semibold">
+                        <div className="hidden sm:flex flex-col">
+                            <h4 className="text-sm font-semibold whitespace-nowrap">
                                 {user?.details.fullname}
                             </h4>
                             <p className="text-xs">Account</p>

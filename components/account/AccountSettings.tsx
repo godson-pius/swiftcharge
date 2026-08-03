@@ -85,13 +85,13 @@ const AccountSettings = () => {
   }, [router]);
 
   return (
-    <main className="w-full flex items-start bg-base-200 h-screen">
+    <main className="w-full flex flex-col lg:flex-row items-start bg-base-200 min-h-screen">
       <AccountSidebar />
 
-      <div className="w-full ml-72">
+      <div className="w-full lg:ml-72 flex-1 pb-10">
         <AccountNavbar />
 
-        <section className={"p-10 mt-16"}>
+        <section className={"p-5 lg:p-10 mt-5 lg:mt-16"}>
           <form
             className="w-full shadow h-max rounded-xl p-5"
             onSubmit={handleSubmit}

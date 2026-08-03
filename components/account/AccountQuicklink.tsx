@@ -10,7 +10,7 @@ const AccountQuicklink = () => {
                     <h2 className='text-2xl font-semibold'>Quick Links</h2>
                 </div>
 
-                <section className='w-full grid grid-cols-3 gap-5 my-4'>
+                <section className='w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 my-4'>
 
                     <Link href={'/account/data'}>
                         <div className='card bg-white p-5 overflow-hidden w-full hover:glass duration-700 transition'>

@@ -7,10 +7,10 @@ import React from 'react'
 
 const page = () => {
   return (
-    <main className='w-full flex items-start bg-base-200 h-max'>
+    <main className='w-full flex flex-col lg:flex-row items-start bg-base-200 min-h-screen'>
       <AccountSidebar />
 
-      <div className="w-full ml-72">
+      <div className="w-full flex-1 lg:ml-72">
         <AccountNavbar />
         <AccountMain />
         <AccountQuicklink /> <hr className='mx-10 mt-10' />

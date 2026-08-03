@@ -54,8 +54,8 @@ const AccountMain = () => {
     }, [router]);
 
     return (
-        <>
-            <section className="w-full px-5 mt-32 flex gap-10">
+        <main className="w-full flex-1">
+            <section className="w-full px-5 mt-10 lg:mt-14 flex flex-col xl:flex-row gap-10">
                 {user && user.details?.accounts?.length > 0 ? (
                     <section className="w-full relative">
                         <div
@@ -69,7 +69,7 @@ const AccountMain = () => {
                                 <p className="text-xs text-gray-200">Bank name</p>
                             </div>
 
-                            <h3 className="mt-16 text-5xl font-bold">
+                            <h3 className="mt-16 text-3xl lg:text-5xl font-bold">
                                 {user.details?.accounts[1].accountNumber}
                             </h3>
 
@@ -99,7 +99,7 @@ const AccountMain = () => {
                                 <p className="text-xs text-gray-200">Bank name</p>
                             </div>
 
-                            <h3 className="mt-16 text-5xl font-bold">
+                            <h3 className="mt-16 text-3xl lg:text-5xl font-bold">
                                 {user.details?.accounts[0].accountNumber}
                             </h3>
 
@@ -136,10 +136,10 @@ const AccountMain = () => {
                     </div>
                 )}
 
-                <div className="w-full flex gap-2">
-                    <div className="flex flex-col gap-3">
+                <div className="w-full flex flex-col md:flex-row xl:flex-row gap-5">
+                    <div className="flex flex-col md:flex-row xl:flex-col gap-3 w-full xl:w-min">
                         <div
-                            className="card w-64 h-full p-6 bg-blue-500 text-white hover:scale-105 duration-700 bg-[url('/balanceimage.avif')] bg-center bg-cover cursor-pointer"
+                            className="card w-full md:w-64 h-auto p-6 bg-blue-500 text-white hover:scale-105 duration-700 bg-[url('/balanceimage.avif')] bg-center bg-cover cursor-pointer min-h-[120px]"
                             onClick={() => setBlurState(!blurState)}
                         >
                             <h2
@@ -151,7 +151,7 @@ const AccountMain = () => {
                         </div>
 
                         <div
-                            className="card w-64 h-full p-6 bg-blue-500 text-white hover:scale-105 duration-700 bg-[url('/balanceimage.avif')] bg-center bg-cover cursor-pointer"
+                            className="card w-full md:w-64 h-auto p-6 bg-blue-500 text-white hover:scale-105 duration-700 bg-[url('/balanceimage.avif')] bg-center bg-cover cursor-pointer min-h-[120px]"
                             onClick={() => setBlurState(!blurState)}
                         >
                             <h2
@@ -165,7 +165,7 @@ const AccountMain = () => {
                     </div>
 
                     <div
-                        className="card w-[26rem] p-6 bg-blue-500 text-white hover:scale-105 duration-700 bg-[url('/balanceimage.avif')] bg-center bg-cover cursor-pointer"
+                        className="card w-full xl:w-[26rem] p-6 bg-blue-500 text-white hover:scale-105 duration-700 bg-[url('/balanceimage.avif')] bg-center bg-cover cursor-pointer"
                         onClick={() => setBlurState(!blurState)}
                     >
                         {/* start each person */}
@@ -189,7 +189,7 @@ const AccountMain = () => {
                     </div>
                 </div>
             </section>
-        </>
+        </main>
     );
 };
 

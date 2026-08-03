@@ -127,13 +127,13 @@ const PurchaseData = () => {
   }, [router]);
 
   return (
-    <main className="w-full flex items-start bg-base-200 h-screen">
+    <main className="w-full flex flex-col lg:flex-row items-start bg-base-200 min-h-screen">
       <AccountSidebar />
 
-      <div className="w-full ml-72">
+      <div className="w-full lg:ml-72 flex-1 pb-10">
         <AccountNavbar />
 
-        <section className={"mx-5 mt-14 h-40"}>
+        <section className={"mx-5 mt-5 lg:mt-14"}>
           <hr className="my-5" />
           <div className="rounded-lg">
             <input
@@ -147,8 +147,8 @@ const PurchaseData = () => {
           </div>
 
           <section className="my-4">
-            <h2>Network</h2>
-            <div className="flex gap-3 items-start my-3">
+            <h2 className="font-semibold mb-2">Network</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 my-3">
               <button
                 className={`flex flex-col ${selectedIdentifier === "mtn" ? "bg-yellow-100" : "bg-white"} w-full p-4 items-center gap-1 justify-center rounded-lg duration-700 hover:scale-105`}
                 onClick={() => {
@@ -235,7 +235,7 @@ const PurchaseData = () => {
               className="input ring-1 ring-gray-200 bg-white rounded-lg font-thin mt-1 text-sm border-none outline-none focus:ring-blue-700 duration-500"
             />
           </div>
-          <div className="grid grid-cols-3 gap-2 items-center">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 items-center">
             <button
               onClick={() => {
                 setSelectedAmount(100);
@@ -290,7 +290,7 @@ const PurchaseData = () => {
               <p>₦ 5,000</p>
             </button>
           </div>
-          <div className="flex items-center gap-3 mt-5">
+          <div className="flex flex-col sm:flex-row items-center gap-3 mt-5">
             <button
               onClick={() => {
                 pinRefs[0].current?.focus();
@@ -298,7 +298,7 @@ const PurchaseData = () => {
               }}
               type="button"
               disabled={!selectedAmount || !selectedIdentifier}
-              className="w-96 btn text-blue-100 bg-blue-500 hover:bg-blue-200 hover:border-2 hover:border-blue-500 hover:text-blue-500 hover:shadow-lg rounded-lg px-10 duration-700 my-2"
+              className="w-full sm:w-96 btn text-blue-100 bg-blue-500 hover:bg-blue-200 hover:border-2 hover:border-blue-500 hover:text-blue-500 hover:shadow-lg rounded-lg px-10 duration-700"
             >
               Proceed to payment
             </button>
@@ -333,12 +333,12 @@ const PurchaseData = () => {
               />
             ))}
           </div>
-          <div className="flex items-center gap-3 mt-5">
+          <div className="flex flex-col sm:flex-row items-center gap-3 mt-5">
             <button
               onClick={() => handlePay()}
               type="button"
               disabled={!selectedAmount || !selectedIdentifier}
-              className="btn text-blue-100 bg-blue-500 hover:bg-blue-200 hover:border-2 hover:border-blue-500 hover:text-blue-500 hover:shadow-lg rounded-lg px-10 duration-700 my-2"
+              className="w-full sm:w-min whitespace-nowrap btn text-blue-100 bg-blue-500 hover:bg-blue-200 hover:border-2 hover:border-blue-500 hover:text-blue-500 hover:shadow-lg rounded-lg px-10 duration-700"
             >
               Buy Airtime
             </button>
@@ -346,7 +346,7 @@ const PurchaseData = () => {
               onClick={() => handlePayWithCrypto()}
               type="button"
               disabled={true}
-              className="btn text-blue-100 bg-blue-500 hover:bg-blue-200 hover:border-2 hover:border-blue-500 hover:text-blue-500 hover:shadow-lg rounded-lg px-10 duration-700 my-2"
+              className="w-full sm:w-min whitespace-nowrap btn text-blue-100 bg-blue-500 hover:bg-blue-200 hover:border-2 hover:border-blue-500 hover:text-blue-500 hover:shadow-lg rounded-lg px-10 duration-700"
             >
               Buy with crypto (coming soon)
             </button>

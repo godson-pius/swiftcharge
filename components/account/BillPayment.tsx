@@ -107,13 +107,13 @@ const BillPayment = () => {
   }, [router]);
 
   return (
-    <main className="w-full flex items-start bg-base-200 h-screen">
+    <main className="w-full flex flex-col lg:flex-row items-start bg-base-200 min-h-screen">
       <AccountSidebar />
 
-      <div className="w-full ml-72">
+      <div className="w-full lg:ml-72 flex-1 pb-10">
         <AccountNavbar />
 
-        <section className={"mx-5 mt-14 h-40"}>
+        <section className={"mx-5 mt-5 lg:mt-14"}>
           <hr className="my-5" />
           <div className="flex justify-between">
             <p>Electricity</p>
@@ -170,14 +170,14 @@ const BillPayment = () => {
               onChange={(e) => setAmount(e.target.value)}
             />
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={() => handlePay()}
               type="button"
               disabled={
                 !selectedFirm || !selectedMeterType || !amount || !meterNumber
               }
-              className="w-96 btn text-blue-100 bg-blue-500 hover:bg-blue-200 hover:border-2 hover:border-blue-500 hover:text-blue-500 hover:shadow-lg rounded-lg px-10 duration-700 my-2"
+              className="w-full sm:w-96 btn text-blue-100 bg-blue-500 hover:bg-blue-200 hover:border-2 hover:border-blue-500 hover:text-blue-500 hover:shadow-lg rounded-lg px-10 duration-700"
             >
               Pay Bill
             </button>
@@ -185,7 +185,7 @@ const BillPayment = () => {
               onClick={() => handlePayWithCrypto()}
               type="button"
               disabled={true}
-              className="w-96 btn text-blue-100 bg-blue-500 hover:bg-blue-200 hover:border-2 hover:border-blue-500 hover:text-blue-500 hover:shadow-lg rounded-lg px-10 duration-700 my-2"
+              className="w-full sm:w-96 btn text-blue-100 bg-blue-500 hover:bg-blue-200 hover:border-2 hover:border-blue-500 hover:text-blue-500 hover:shadow-lg rounded-lg px-10 duration-700"
             >
               Buy with crypto (coming soon)
             </button>

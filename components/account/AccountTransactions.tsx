@@ -43,15 +43,15 @@ const AccountTransactions = () => {
     return (
         <>
             <main className='w-full px-5 mt-10'>
-                <div className="w-full flex items-center justify-between">
+                <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4">
                     <h2 className='text-2xl font-semibold'>Transaction history</h2>
                     <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} type="search"
                            name="search" id="search"
-                           className='ring-2 ring-gray-200 rounded-lg p-2 px-3 text-sm w-72 outline-none focus:scale-110 duration-700 focus:glass focus:outline-blue-400'
+                           className='ring-2 ring-gray-200 rounded-lg p-2 px-3 text-sm w-full sm:w-72 outline-none focus:scale-110 duration-700 focus:glass focus:outline-blue-400'
                            placeholder='search for transaction'/>
                 </div>
 
-                <section className='w-full grid grid-cols-3 gap-5 my-4'>
+                <section className='w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 my-4'>
 
                     {filteredTransactions.map(trx => (
                         <Airtime key={trx._id} trx={trx}/>
